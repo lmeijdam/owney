@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'app/core/services/auth.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   template: `
     <p>
-      login Works!
+      register Works!
     </p>
   `
 })
-export class LoginComponent implements OnInit {
+export class RegisterComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
 

@@ -5,10 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { CoreModule } from 'app/core/core.module';
+import { RegisterComponent } from './register/register.component';
 
 const ROUTES: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent }
 ];
 
 @NgModule({
@@ -18,6 +20,6 @@ const ROUTES: Routes = [
     SharedModule,
     CoreModule
   ],
-  declarations: [ LoginComponent ]
+  declarations: [ LoginComponent, RegisterComponent ]
 })
 export class AuthModule { }
