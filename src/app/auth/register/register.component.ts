@@ -6,6 +6,8 @@ import { AuthService } from 'app/core/services/auth.service';
   template: `
     <p>
       register Works!
+      
+      <auth-form></auth-form>
     </p>
   `
 })

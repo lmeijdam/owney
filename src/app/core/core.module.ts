@@ -6,6 +6,7 @@ import { AngularFireModule } from 'angularfire2';
 
 import { APP_CONFIG } from 'config';
 import { AuthService } from 'app/core/services/auth.service';
+import { AuthGuard } from 'app/core/guards/auth.guard';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: [
-        AuthService
+        AuthService,
+        AuthGuard
       ]
     }
   }

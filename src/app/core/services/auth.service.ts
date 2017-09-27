@@ -7,30 +7,39 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthService {
 
-  authState: any = null;
+  auth: any = null;
 
-  constructor(private afAuth: AngularFireAuth) { }
-  
+  constructor(private afAuth: AngularFireAuth) {
+  }
+
+  get authState() {
+    return this.afAuth.authState;
+  }
+
   get authenticated(): boolean {
     return this.authState !== null;
   }
 
-  emailLogin(email:string, password:string) {
+  emailLogin(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((user) => {
-        this.authState = user
+        this.auth = user
         this.updateUserData()
       })
       .catch(error => console.log(error));
   }
 
-  emailSignUp(email:string, password:string) {
+  emailSignUp(email: string, password: string) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((user) => {
-        this.authState = user
+        this.auth = user
         this.updateUserData()
       })
       .catch(error => console.log(error));
+  } 
+
+  logoutUser() {
+    return this.afAuth.auth.signOut();
   }
 
   private updateUserData(): void {
