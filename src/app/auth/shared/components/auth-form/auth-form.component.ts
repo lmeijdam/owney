@@ -26,7 +26,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     </div>
     <div class="form-group">
         <div class="col-lg-10 col-lg-offset-2">
-            <ng-content></ng-content>
+            <ng-content select="button"></ng-content>
+            <ng-content select="p"></ng-content>
         </div>
     </div>
         
@@ -47,7 +48,8 @@ export class AuthFormComponent implements OnInit {
     ngOnInit() { }
 
     onSubmit() {
-        if(this.form.valid) 
+        if(this.form.valid) {
             this.submitted.emit(this.form);
+        }
     }
 }

@@ -13,13 +13,18 @@ import { UserService } from 'app/core/services/user.service';
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
         <a class="navbar-brand" href="#">{{ title }}</a>
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
           <li><a *ngIf="!(user$ | async)?.authenticated" routerLink="/auth">Login</a></li>
-          <li><a *ngIf="!(user$ | async)?.authenticated" routerLink="/auth/register">Register</a></li>
           <li class="dropdown" *ngIf="(user$ | async)?.authenticated">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             {{ (user$ | async)?.email }} 
