@@ -7,8 +7,6 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class AuthService {
 
-  auth: any = null;
-
   constructor(private afAuth: AngularFireAuth) {
   }
 
@@ -16,45 +14,20 @@ export class AuthService {
     return this.afAuth.authState;
   }
 
-  get authenticated(): boolean {
+  get isAuthenticated(): boolean {
     return this.authState !== null;
   }
 
-  emailLogin(email: string, password: string) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        this.auth = user
-        this.updateUserData()
-      })
-      .catch(error => console.log(error));
+  login(email: string, password: string) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password);
   }
 
-  emailSignUp(email: string, password: string) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((user) => {
-        this.auth = user
-        this.updateUserData()
-      })
-      .catch(error => console.log(error));
-  } 
+  register(email: string, password: string) {
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password);
+  }
 
-  logoutUser() {
+  logout() {
     return this.afAuth.auth.signOut();
   }
-
-  private updateUserData(): void {
-    // Writes user name and email to realtime db
-    // useful if your app displays information about users or for admin features
-  
-      // let path = `users/${this.currentUserId}`; // Endpoint on firebase
-      // let data = {
-      //               email: this.authState.email,
-      //               name: this.authState.displayName
-      //             }
-  
-      // this.db.object(path).update(data)
-      // .catch(error => console.log(error));
-  
-    }
 
 }

@@ -5,23 +5,31 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
     selector: 'auth-form',
     template: `<div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <label>
-            <input 
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Email</label>
+        <div class="col-sm-10">
+            <input class="form-control"
             type="email" 
             placeholder="Email address"
             formControlName="email">
-        </label>
-        <label>
-            <input 
+        </div>
+    </div>
+    <div class="form-group"> 
+        <label class="col-sm-2 control-label">Password</label>
+        <div class="col-sm-10">
+            <input class="form-control"
             type="password" 
             placeholder="Enter password"
             formControlName="password">
-        </label>
-        <button type="submit">Submit</button>
-        <div *ngIf="emailFormat">
-        Invalid email format
-      </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2">
+            <ng-content></ng-content>
+        </div>
+    </div>
+        
     </form>
   </div>`
 })
@@ -39,14 +47,7 @@ export class AuthFormComponent implements OnInit {
     ngOnInit() { }
 
     onSubmit() {
-        if(this.form.valid) {
+        if(this.form.valid) 
             this.submitted.emit(this.form);
-        }
     }
-
-    get emailFormat() {
-        const control = this.form.get('email');
-        return control.hasError('email') && control.touched;
-      }
-
 }

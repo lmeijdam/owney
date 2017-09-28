@@ -1,31 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'app/core/services/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from 'app/core/services/user.service';
 
 @Component({
   selector: 'app-login',
   template: `
-    <p>
-      login Works!
-
-      <auth-form (submitted)="onSubmit($event)"></auth-form>
-    </p>
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <h2>Login</h2>
+          <div class="alert alert-danger" *ngIf="err">{{ err }}</div>
+          <auth-form (submitted)="onSubmit($event)">            
+            <button type="submit" class="btn btn-primary">Login</button>
+          </auth-form>
+        </div>        
+      </div>
   `
 })
 export class LoginComponent implements OnInit {
+  err: string;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService,
+    private router: Router,
+    private userService: UserService) { }
 
   ngOnInit() {
   }
 
   async onSubmit($event) {
-    const {email, password} = $event.value;
+    const { email, password } = $event.value;
 
     try {
-      await this.authService.emailLogin(email, password);
-      this.router.navigateByUrl("/friends");
-    } catch(err) {
+      await this.authService.login(email, password).then((user) => {
+        this.userService.update(user);
+        this.router.navigate(["/"]);
+      });
+    } catch (err) {
+      this.err = err;
     }
   }
 

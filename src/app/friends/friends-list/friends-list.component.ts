@@ -20,7 +20,7 @@ export class FriendsListComponent implements OnInit {
     ngOnInit() { }
 
     handleClick() {
-        this.authService.logoutUser().then(() => {
+        this.authService.logout().then(() => {
             this.router.navigateByUrl('/');
         });
     }
