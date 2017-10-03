@@ -1,28 +1,44 @@
 import { Injectable } from '@angular/core';
 import { Store, User } from 'app/core/store';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Injectable()
 export class UserService {
 
-    constructor(private store: Store) { }
+    constructor(private store: Store, private db: AngularFireDatabase) { }
 
-    update(arg?): void {
-        if (!arg) {
-            this.store.set('user', null);
-            return;
-        }
-        const user: User = {
-            email: arg.email,
-            uid: arg.uid,
-            authenticated: true
-        };
-        this.store.set('user', user);
-
-        // update or create database entity
-        // updateUserInfo(arg)
+    setUser(data) {
+        this.store.set('user', this.createUser(data));
     }
 
-    updateUserInfo(user) {
+    get User() {
+        return this.store.select('user');
+    }
 
+    register(user) {
+        return this.db.object(`users/${user.uid}`).update({ email: user.email})
+        .then(() => this.setUser(user));
+    }
+
+    get(uid) {
+        if(uid === null) return null;
+        return this.db.object(`users/${uid}`);
+    }
+
+    updateUserInfo(user){
+        //return this.db.object(path).update(data);
+    }
+
+    getUserInfo(id) {
+        this.db.object(`users/${id}`).subscribe(user => console.log(user));
+    }
+
+    private createUser(userInfo?) {
+        if(!userInfo) return null;
+        return {
+            email: userInfo.email,
+            uid: userInfo.uid,
+            authenticated: true
+        };
     }
 }

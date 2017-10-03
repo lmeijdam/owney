@@ -18,8 +18,8 @@ import { UserService } from 'app/core/services/user.service';
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
-    </button>
-        <a class="navbar-brand" href="#">{{ title }}</a>
+      </button>
+        <a class="navbar-brand" routerLink="/">{{ title }}</a>
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -31,7 +31,7 @@ import { UserService } from 'app/core/services/user.service';
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#">Profile</a></li>
+            <li><a routerLink="/profile">Profile</a></li>
             <li><a (click)="handleLogout()">Logout</a></li>
           </ul>
         </li>
@@ -46,7 +46,6 @@ import { UserService } from 'app/core/services/user.service';
   `
 })
 export class AppComponent implements OnInit {
-
   title: string = "Owney";
   user$: Observable<User>;
 
@@ -55,19 +54,16 @@ export class AppComponent implements OnInit {
     private store: Store,
     private userService: UserService) { }
 
+  // handleLogout() {
+  //   this.authService.logout().then(() => this.router.navigate(['home']));
+  // }
+
   async handleLogout() {
-    await this.authService.logout().then(() => {
-      this.userService.update();
-      this.router.navigate(["/auth"]);
-    });
+    await this.authService.logout();
+    this.router.navigate(['/auth/login']);
   }
 
   ngOnInit() {
     this.user$ = this.store.select<User>('user');
   }
 }
-
-// <nav>
-// <a routerLink="/auth">Login</a>
-// <a routerLink="/auth/register">Register</a>
-// </nav>

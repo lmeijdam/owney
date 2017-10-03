@@ -30,14 +30,13 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  async onSubmit($event) {
+  onSubmit($event) {
     const { email, password } = $event.value;
 
     try {
-      await this.authService.login(email, password).then((user) => {
-        this.userService.update(user);
-        this.router.navigate(["/"]);
-      });
+      this.authService.login(email, password)
+      .then(() => this.router.navigate(['/']))
+      .catch(err => this.err = err.message);
     } catch (err) {
       this.err = err;
     }

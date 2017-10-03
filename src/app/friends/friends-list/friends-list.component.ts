@@ -23,5 +23,5 @@ export class FriendsListComponent implements OnInit {
         this.authService.logout().then(() => {
             this.router.navigateByUrl('/');
         });
-    }
+    } 
 }

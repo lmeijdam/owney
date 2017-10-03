@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 
 import { APP_CONFIG } from 'config';
@@ -14,7 +15,8 @@ import { UserService } from 'app/core/services/user.service';
   imports: [
     CommonModule,
     AngularFireModule.initializeApp(APP_CONFIG.firebase),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   declarations: []
 })
