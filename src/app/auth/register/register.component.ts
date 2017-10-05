@@ -11,9 +11,8 @@ import { UserService } from 'app/core/services/user.service';
       <h2>Register</h2>
       <div class="alert alert-danger" *ngIf="err">{{ err }}</div>
       <auth-form (submitted)="onSubmit($event)">
-        <button type="submit" class="btn btn-primary">Register</button>
-        
-        <p class="text-right">
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+        <p class="text-center">
           <a routerLink="/auth">Already have an account?</a>
         </p>
       </auth-form>

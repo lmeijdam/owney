@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store, User } from 'app/core/store';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from 'app/core/services/user.service';
+import { Subscription } from 'rxjs/Subscription';
 
 
 @Component({
@@ -19,7 +20,7 @@ import { UserService } from 'app/core/services/user.service';
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       </button>
-        <a class="navbar-brand" routerLink="/">{{ title }}</a>
+        <a class="navbar-brand" routerLink="/">Owney</a>
       </div>
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -46,24 +47,27 @@ import { UserService } from 'app/core/services/user.service';
   `
 })
 export class AppComponent implements OnInit {
-  title: string = "Owney";
   user$: Observable<User>;
+  subscription: Subscription;
 
   constructor(private authService: AuthService,
     private router: Router,
-    private store: Store,
-    private userService: UserService) { }
-
-  // handleLogout() {
-  //   this.authService.logout().then(() => this.router.navigate(['home']));
-  // }
+    private store: Store) { }
 
   async handleLogout() {
-    await this.authService.logout();
-    this.router.navigate(['/auth/login']);
+    await this.authService.logout().then(() => {
+      this.router.navigate(['/auth/login']);
+    });
   }
 
   ngOnInit() {
+    this.subscription = this.authService.auth$.subscribe();
     this.user$ = this.store.select<User>('user');
   }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  
 }
